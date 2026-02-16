@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+</head>
+<body>
+
+<div class="navbar">
+    Welcome <%= user.name %> |
+    <a href="/cart">Cart 🛒</a> |
+    <a href="/logout">Logout</a>
+</div>
+
+<div class="container">
+    <h3>Food Items 🍔</h3>
+
+    <% products.forEach(product => { %>
+        <div class="card">
+            <img src="<%= product.image %>">
+            <h4><%= product.name %></h4>
+            <p>Category: <%= product.category %></p>
+            <p>₹<%= product.price %></p>
+
+            <form method="POST" action="/add-to-cart">
+                <input type="hidden" name="id" value="<%= product.id %>">
+                <input type="hidden" name="name" value="<%= product.name %>">
+                <input type="hidden" name="price" value="<%= product.price %>">
+                <button type="submit">Add to Cart</button>
+            </form>
+        </div>
+    <% }) %>
+
+    <hr>
+    <h3>Your Orders 🧾</h3>
+
+    <% if (orders.length === 0) { %>
+        <p style="text-align:center;">No orders yet.</p>
+    <% } else { %>
+        <% orders.forEach(order => { %>
+            <div class="card">
+                <strong>Total: ₹<%= order.totalAmount %></strong><br>
+                <ul>
+                    <% order.items.forEach(item => { %>
+                        <li><%= item.name %> - ₹<%= item.price %></li>
+                    <% }) %>
+                </ul>
+            </div>
+        <% }) %>
+    <% } %>
+
+</div>
+
+</body>
+</html>

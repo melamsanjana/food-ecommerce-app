@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+
+    <title>Cart</title>
+</head>
+<body>
+
+    <h2>Your Cart 🛒</h2>
+
+    <% if (cart.length === 0) { %>
+        <p>Cart is empty</p>
+    <% } else { %>
+        <% cart.forEach((item, index) => { %>
+    <div>
+        <strong><%= item.name %></strong> - ₹<%= item.price %>
+
+        <form method="POST" action="/remove-from-cart" style="display:inline;">
+            <input type="hidden" name="index" value="<%= index %>">
+            <button type="submit">Remove</button>
+        </form>
+    </div>
+<% }) %>
+
+
+        <h3>Total: ₹<%= total %></h3>
+    <% } %>
+<br>
+<form method="POST" action="/place-order">
+    <button type="submit">Place Order ✅</button>
+</form>
+
+    <br>
+    <a href="/dashboard">Back to Dashboard</a>
+
+</body>
+</html>
